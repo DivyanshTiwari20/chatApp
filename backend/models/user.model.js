@@ -1,30 +1,32 @@
 import mongoose from 'mongoose';    
 
-const userSchema= new mongoose.Schema({
-    fullName:{
-        type: String,
-        required: true
-    },
-    userName:{
+const userSchema = new mongoose.Schema({
+    fullName: {
         type: String,
         required: true,
-        unique: true
     },
-    password:{
+    username: {
+        type: String,
+        required: [true, 'Username is required'],
+        unique: true,
+        trim: true,
+    },
+    password: {
         type: String,
         required: true,
-        minlength: 6
+        minlength: [6, 'Password must be at least 6 characters long'],
     },
-    gender:{
+    gender: {
         type: String,
         required: true,
-        enum:["male","female","other"]
+        enum: ["male", "female", "other"],
     },
-    profilePic:{
+    profilePic: {
         type: String,
-        default: ""
-    }
+        default: "",
+    },
 });
+
 
 
 // Create a model from the schema
