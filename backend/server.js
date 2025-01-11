@@ -1,27 +1,34 @@
-import express from 'express';
-import dotenv from 'dotenv';
-import connectToMongoDB from './db/connectToMongoDB.js';
-import authRoutes from './routes/auth.routes.js';
+import express from "express";
+import dotenv from "dotenv";
+import cookieParser from "cookie-parser";
 
-const app = express();
-const PORT = process.env.PORT || 5000;
+import authRoutes from "./routes/auth.routes.js";
+import messageRoutes from "./routes/message.routes.js";
+import userRoutes from "./routes/user.routes.js";
 
-// to use .env file variables
+import connectToMongoDB from "./db/connectToMongoDB.js";
+
 dotenv.config();
 
+// Initialize Express app
+const app = express();
 
-// to parse the incoming JSON data from (req.body)
+// Set up port from environment variables or use 5000
+const PORT = process.env.PORT || 5000;
+
+// Middleware to parse JSON payloads
 app.use(express.json());
 
-// middleware 
-app.use('/api/auth',authRoutes);
+// Middleware to parse cookies
+app.use(cookieParser());
 
-// app.get ('/', (req,res)=>{
-//     res.send ('API is running');
-// });
+// Route middleware
+app.use("/api/auth", authRoutes);
+app.use("/api/messages", messageRoutes);
+app.use("/api/users", userRoutes);
 
-
-app.listen(PORT,()=>{
-    connectToMongoDB();
-    console.log(`Server running in ${process.env.NODE_ENV} mode on port http://localhost:${PORT}`);
+// Start server and connect to MongoDB
+app.listen(PORT, () => {
+	connectToMongoDB();
+	console.log(`Server Running on port ${PORT}`);
 });
