@@ -1,20 +1,27 @@
+import { Navigate, Route, Routes } from "react-router-dom";
 import "./App.css";
-import './index.css';
-
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";  
-
-import Login from "./pages/login/login.jsx";
-// import SignUp from "./pages/signup/signUp.jsx"; // Fixed import statement
+import Home from "./pages/home/Home";
+import Login from "./pages/login/Login";
 import SignUp from "./pages/signup/signup.jsx";
-import Home from "./pages/home/home.jsx";
+import { Toaster } from "react-hot-toast";
+import { useAuthContext } from "./context/AuthContext";
 
 function App() {
-  return (
-    <div className="p-4 h-screen flex items-center justify-center">
-      {/* <SignUp /> Changed to uppercase */}
-      <Home/>
-    </div>
-  );
+	const { authUser } = useAuthContext();
+	return (
+		<div className='p-4 h-screen flex items-center justify-center'>
+			<Routes>
+				<Route path='/' element={authUser ? <Home /> : <Navigate to={"/login"} />} />
+				<Route path='/login' element={authUser ? <Navigate to='/' /> : <Login />} />
+				<Route path='/signup' element={authUser ? <Navigate to='/' /> : <SignUp />} />
+			</Routes>
+			<Toaster />
+		</div>
+	);
 }
 
 export default App;
+
+
+// import SignUp from "./pages/signup/signup.jsx";
+// <Route path="/signup" element ={<SignUp />} />
