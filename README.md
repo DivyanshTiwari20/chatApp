@@ -134,7 +134,8 @@ The app will run at `http://localhost:3000`
 
 ## 📸 Screenshots
 
-> _Add screenshots of your app here_
+<img width="1354" height="905" alt="image" src="https://github.com/user-attachments/assets/b4b9db5f-0402-43ca-a4f0-d17fbea6499e" />
+
 
 ---
 
